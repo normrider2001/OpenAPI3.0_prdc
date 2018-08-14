@@ -1,0 +1,33 @@
+paths:
+  /pets: 
+    get: 
+      summary: List all pets
+      parameters:
+        name: limit
+        in: query
+        required: false
+      responses:
+       '200': 
+        description: An array of pets
+        content:
+          application/json:
+            schema: 
+              type: array
+              items:
+                $ref: '#/components/schemas/Pet'
+    post:
+      summary: Create a pet
+      requestBody:
+components:
+  schemas:
+    Pet:
+      properties: 
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+      required:
+        - id
+        - name
+          
