@@ -1,23 +1,29 @@
-paths:
-  /pets: 
-    get: 
-      summary: List all pets
-      parameters:
-        name: limit
-        in: query
-        required: false
-      responses:
-       '200': 
-        description: An array of pets
-        content:
-          application/json:
-            schema: 
-              type: array
-              items:
-                $ref: '#/components/schemas/Pet'
-    post:
-      summary: Create a pet
-      requestBody:
+get:
+  summary: List all pets
+  parameters:
+  - name: limit
+    in: query
+    required: false
+  responses:
+    '200': 
+    description: An array of pets
+    content:
+      application/json:
+        schema: 
+          type: array
+          items:
+            $ref: '#/components/schemas/Pet'
+post:
+  summary: Create a pet
+  requestBody:
+    description: The body of the pet to create
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Pet'
+  responses:
+    '201':
+      description: Pet was created
 components:
   schemas:
     Pet:
@@ -30,4 +36,3 @@ components:
       required:
         - id
         - name
-          

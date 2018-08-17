@@ -4,5 +4,5 @@ info:
   description: This is an example openapi spec to support Prairie Dev Con talk.
   version: 1.0.0
 paths:
-  $refs:
-    - './pets.yaml#paths'
+  /pets:
+    $ref: './pets.yaml'
