@@ -1,0 +1,22 @@
+components:
+  schemas:
+    Owner:
+      properties: 
+        id: 
+          type: integer
+          format: int64
+        name:
+          type: string
+        address:
+          type: string
+        city:
+          type: string
+        region:
+          type: string
+        postalcode:
+          type: string
+        country:
+          type: string
+      required:
+        - id
+        - name

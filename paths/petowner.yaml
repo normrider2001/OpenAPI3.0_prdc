@@ -1,0 +1,15 @@
+get:
+  summary: Get a list of owner to a pet
+  parameters:
+  - name: petId
+    in: path
+    required: true
+  responses:
+    '200':
+      description: An array of owners
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../components/owner.yaml#/components/schemas/Owner'

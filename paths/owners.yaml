@@ -1,0 +1,20 @@
+get:
+  summary: List all owners
+  parameters:
+  - name: limit
+    in: query
+    required: false
+  responses:
+    '200':
+      description: An owner of a pet
+post:
+  summary: Create an owner
+  requestBody:
+    description: The body for the owner
+    content:
+      application/json:
+        schema:
+          $ref: '#../components/owners.yaml#/components/schemas/Owner'
+  responses:
+    '201':
+      description: Owner was created

@@ -8,3 +8,7 @@ paths:
     $ref: './paths/pets.yaml'
   /pets/{petId}:
     $ref: './paths/pet.yaml'
+  /owners:
+    $ref: './paths/owners.yaml'
+  /pets/{petId}/owners:
+    $ref: './paths/petowner.yaml'

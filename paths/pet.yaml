@@ -6,13 +6,13 @@ get:
     required: true
   responses:
     '200':
-    description: A single pet
-    content:
-      application/json:
-        schema:
-          $ref: '../components/pets.yaml#/components/schemas/Pet'
+      description: A single pet
+      content:
+        application/json:
+          schema:
+            $ref: '../components/pets.yaml#/components/schemas/Pet'
     '404':
-     description: Not Found
+       description: Not Found
 put:
   summary: Update or create a specific pet
   parameters:
@@ -21,11 +21,11 @@ put:
     required: true
   responses:
     '200':
-    description: Update a pet
-    content:
-      application/json:
-        schema:
-          $ref: '../components/pets.yaml#/components/schemas/Pet'
+      description: Update a pet
+      content:
+        application/json:
+          schema:
+            $ref: '../components/pets.yaml#/components/schemas/Pet'
 delete:
   summary: Delete the pet
   parameters:
@@ -34,4 +34,15 @@ delete:
     required: true
   responses:
     '204':
-    description: Deleted entity
+      description: Deleted entity
+head:
+  summary: Check for existence of a pet
+  parameters:
+  - name: petId
+    in: path
+    required: true
+  responses:
+    '200':
+      description: Pet Exists
+    '404':
+      description: 'No pet found'
