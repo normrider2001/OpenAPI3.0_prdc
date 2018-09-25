@@ -24,4 +24,21 @@ post:
   responses:
     '201':
       description: Pet was created
+      content:
+        applicaton/json:
+         schema:
+           type: object
+           properties:
+             id:
+               type: integer
+               format: int64
+               description: Id of the created pet
+      links:
+        GetPetByPetId:
+          operationId: getPetById
+          parameters:
+            petId: '$response.body#/id'
+          description: >
+           The `id` value returned in the response can be used as the
+           `userId` parameter in `GET /pets/{petId}`.
 

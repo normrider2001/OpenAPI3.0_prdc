@@ -12,4 +12,4 @@ get:
           schema:
             type: array
             items:
-              $ref: '../components/owner.yaml#/components/schemas/Owner'
+              $ref: '../components/owners.yaml#/components/schemas/Owner'

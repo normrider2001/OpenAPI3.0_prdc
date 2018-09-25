@@ -1,4 +1,5 @@
 get:
+  operationId: getPetById
   summary: Get specific pet
   parameters:
   - name: petId
