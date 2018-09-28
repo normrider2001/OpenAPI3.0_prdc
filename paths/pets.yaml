@@ -12,7 +12,7 @@ get:
           schema: 
             type: array
             items:
-              $ref: '../components/pets.yaml#/components/schemas/Pet'
+              $ref: '../components/pets.yaml#/components/schemas/PetType'
 post:
   summary: Create a pet
   requestBody:
@@ -20,7 +20,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#../components/pets.yaml#/components/schemas/Pet'
+          $ref: '#../components/pets.yaml#/components/schemas/PetType'
   responses:
     '201':
       description: Pet was created

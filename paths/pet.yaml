@@ -11,7 +11,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../components/pets.yaml#/components/schemas/Pet'
+            $ref: '../components/pets.yaml#/components/schemas/PetType'
     '404':
        description: Not Found
 put:
@@ -26,7 +26,7 @@ put:
       content:
         application/json:
           schema:
-            $ref: '../components/pets.yaml#/components/schemas/Pet'
+            $ref: '../components/pets.yaml#/components/schemas/PetType'
 delete:
   summary: Delete the pet
   parameters:
@@ -36,6 +36,8 @@ delete:
   responses:
     '204':
       description: Deleted entity
+    '404':
+      description: No pet found
 head:
   summary: Check for existence of a pet
   parameters:
@@ -46,4 +48,4 @@ head:
     '200':
       description: Pet Exists
     '404':
-      description: 'No pet found'
+      description: No pet found
