@@ -16,6 +16,12 @@ get:
        description: Not Found
 put:
   summary: Update or create a specific pet
+  requestBody:
+    description: The body of the pet to create
+    content:
+      application/json:
+        schema:
+          $ref: '#../components/pets.yaml#/components/schemas/PetType'
   parameters:
   - name: petId
     in: path
