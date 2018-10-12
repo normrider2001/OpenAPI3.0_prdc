@@ -3,6 +3,9 @@ get:
   parameters:
   - name: petId
     in: path
+    schema:
+      type: integer
+      format: int64
     required: true
   responses:
     '200':

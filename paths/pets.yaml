@@ -3,6 +3,8 @@ get:
   parameters:
   - name: limit
     in: query
+    schema:
+      type: integer
     required: false
   responses:
     '200': 
