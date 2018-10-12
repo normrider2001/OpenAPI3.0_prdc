@@ -24,7 +24,7 @@ put:
     content:
       application/json:
         schema:
-          $ref: '#../components/pets.yaml#/components/schemas/PetType'
+          $ref: '../components/pets.yaml#/components/schemas/PetType'
   responses:
     '200':
       description: Update a pet

@@ -16,7 +16,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#../components/owners.yaml#/components/schemas/Owner'
+          $ref: '../components/owners.yaml#/components/schemas/Owner'
   responses:
     '201':
       description: Owner was created

@@ -22,7 +22,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: '#../components/pets.yaml#/components/schemas/PetType'
+          $ref: '../components/pets.yaml#/components/schemas/PetType'
   responses:
     '201':
       description: Pet was created
@@ -42,5 +42,5 @@ post:
             petId: '$response.body#/id'
           description: >
            The `id` value returned in the response can be used as the
-           `userId` parameter in `GET /pets/{petId}`.
+           `petId` parameter in `GET /pets/{petId}`.
 
