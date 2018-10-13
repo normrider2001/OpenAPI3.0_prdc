@@ -1,0 +1,358 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Prairie Dev Con Example",
+    "description": "This is an example openapi spec to support Prairie Dev Con talk.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/pets": {
+      "get": {
+        "summary": "List all pets",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Search for pets by name."
+          },
+          {
+            "name": "cursor",
+            "in": "header",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false,
+            "description": "A cursor that can be used for paging"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/paths/~1pets/post/requestBody/content/application~1json/schema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a pet",
+        "requestBody": {
+          "description": "The body of the pet to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "description": "A representation of a cat",
+                    "allOf": [
+                      {
+                        "type": "object",
+                        "discriminator": {
+                          "propertyName": "petType"
+                        },
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "petType": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name",
+                          "petType"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "huntingSkill": {
+                            "type": "string",
+                            "description": "The measured skill for hunting",
+                            "enum": [
+                              "clueless",
+                              "lazy",
+                              "adventurous",
+                              "aggressive"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "huntingSkill"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "description": "A representation of a dog",
+                    "allOf": [
+                      {
+                        "$ref": "#/paths/~1pets/post/requestBody/content/application~1json/schema/oneOf/0/allOf/0"
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "packSize": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "the size of the pack the dog is from",
+                            "default": 0,
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "packSize"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "petType"
+                }
+              },
+              "example": {
+                "name": "Tabitha",
+                "petType": "Cat",
+                "huntingSkill": "lazy"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pet was created",
+            "content": {
+              "applicaton/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "Id of the created pet"
+                    }
+                  }
+                }
+              }
+            },
+            "links": {
+              "GetPetByPetId": {
+                "operationId": "getPetById",
+                "parameters": {
+                  "petId": "$response.body#/id"
+                },
+                "description": "The `id` value returned in the response can be used as the `petId` parameter in `GET /pets/{petId}`.\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pets/{petId}": {
+      "parameters": [
+        {
+          "name": "petId",
+          "in": "path",
+          "schema": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "operationId": "getPetById",
+        "summary": "Get specific pet",
+        "responses": {
+          "200": {
+            "description": "A single pet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1pets/post/requestBody/content/application~1json/schema"
+                },
+                "example": {
+                  "id": 100,
+                  "name": "Fluffy",
+                  "petType": "Dog",
+                  "packSize": 4
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update or create a specific pet",
+        "requestBody": {
+          "description": "The body of the pet to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/paths/~1pets/post/requestBody/content/application~1json/schema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Update a pet",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1pets/post/requestBody/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the pet",
+        "responses": {
+          "204": {
+            "description": "Deleted entity"
+          },
+          "404": {
+            "description": "No pet found"
+          }
+        }
+      },
+      "head": {
+        "summary": "Check for existence of a pet",
+        "responses": {
+          "200": {
+            "description": "Pet Exists"
+          },
+          "404": {
+            "description": "No pet found"
+          }
+        }
+      }
+    },
+    "/owners": {
+      "get": {
+        "summary": "List all owners",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            },
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An owner of a pet"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an owner",
+        "requestBody": {
+          "description": "The body for the owner",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "format": "int64"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "region": {
+                    "type": "string"
+                  },
+                  "postalcode": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Owner was created"
+          }
+        }
+      }
+    },
+    "/pets/{petId}/owners": {
+      "get": {
+        "summary": "Get a list of owner to a pet",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of owners",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/paths/~1owners/post/requestBody/content/application~1json/schema"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
