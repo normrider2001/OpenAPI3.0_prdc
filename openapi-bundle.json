@@ -181,7 +181,10 @@
             "type": "integer",
             "format": "int64"
           },
-          "required": true
+          "required": true,
+          "example": {
+            "value": 100
+          }
         }
       ],
       "get": {
